@@ -8,9 +8,8 @@ namespace Weights
 {
     class WeightBook
     {
-        public WeightBook(string name)    // constructor
+        public WeightBook()    // constructor
         {
-            string bookName = name;
             weights = new List<float>();
             dates = new List<string>();
         }
@@ -19,24 +18,19 @@ namespace Weights
         {
             WeightStatistics stats = new WeightStatistics();
             
-            float start = stats.Startweight;
+            float start = weights[0];
             float last = weights.LastOrDefault(); 
             foreach (float weight in weights)
             {
                 stats.HighestWeight = Math.Max(weight, stats.HighestWeight);
                 stats.LowestWeight = Math.Min(weight, stats.LowestWeight);
-                
             }
 
             stats.LostWeight = start - last;
+            stats.AverageWeight = stats.LostWeight / (weights.Count() - 1);
 
             return stats;
         } 
-
-        //public void AddName(string name)
-        // {
-        //   names.Add(name);
-        //}
 
         public void AddWeight(float weight)     // method to Add Weight to a list
         {

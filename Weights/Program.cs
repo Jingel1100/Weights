@@ -35,27 +35,83 @@ namespace Weights
 
                 case "3":
                     Console.Clear();
+                    Console.WriteLine();
                     Console.WriteLine("  Weight Plan Statistics: ");
-                    //WeightStatistics stats = book.ComputeStatistics();
+                    Console.WriteLine();
 
-                    //Console.WriteLine("Highest weight: " + stats.HighestWeight);
-                    //Console.WriteLine("Lowest weight: " + stats.LowestWeight);
-                    //Console.WriteLine("Lost weight: " + stats.LostWeight);
+                    Console.Write("  Enter your name: ");
+                    string bookName = Console.ReadLine();
 
-                    Console.WriteLine("...");
-                    return Back();
+                    //Read info from "WeightBook(bookName).txt" file. 
+                    
+                    try
+                    {
+                        string line;
+                        int count = 0;
+                        string startDate;
+                        float startWeight;
+                        WeightBook book = new WeightBook();
 
+                        StreamReader reader = new StreamReader("WeightBook" + bookName + ".txt");
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            count++;
+
+                            if (count == 1)
+                            {
+                                string[] bits = line.Split(',');
+                                startDate = bits[0];
+                                startWeight = float.Parse(bits[1]);
+                            }
+
+                            if (count > 1)
+                            {
+                                string[] bits2 = line.Split(',');
+                                book.AddDate(bits2[0]);
+                                book.AddWeight(float.Parse(bits2[1]));
+                            }
+                        }
+                        reader.Close();
+
+                        WeightStatistics stats = book.ComputeStatistics();
+                        Console.WriteLine();
+                        Console.WriteLine("  Startweight: ");
+                        Console.WriteLine();
+                        Console.WriteLine("  Highest weight: {0:f}", stats.HighestWeight);
+                        Console.WriteLine("  Lowest weight: {0:f}", stats.LowestWeight);
+                        Console.WriteLine("  Lost weight: {0:f}", stats.LostWeight);
+                        Console.WriteLine("  Average    : {0:f}", stats.AverageWeight);
+
+                        Console.WriteLine();
+                        return Back();
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("  A WeightBook with this name could not be found. ");
+                        return Back();
+                    }
+                    
                 case "4":
-                    Environment.Exit(0);
-                    return false;
+                    return Quit();
 
                 default:
-                    Console.Clear();
-                    Console.WriteLine();
-                    Console.WriteLine("  !** Please enter a valid number. **! ");
-                    Console.WriteLine();
-                    return true;
+                    return NonValidAction();
             }
+        }
+
+        private static bool Quit()
+        {
+            Environment.Exit(0);
+            return false;
+        }
+
+        private static bool NonValidAction()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("  !** Please enter a valid number. **! ");
+            Console.WriteLine();
+            return true;
         }
 
         private static string StartMenu()
@@ -85,16 +141,15 @@ namespace Weights
             string newName = Console.ReadLine();
 
             Console.Write("  Enter new weight (e.g.: 78,4): ");
-            string convNewWeight = Console.ReadLine();
-            float newWeight = float.Parse(convNewWeight);
-
+            string newWeight = Console.ReadLine();
+            
             Console.Write("  Enter date of new weight: ");
             string newDate = Console.ReadLine();
 
             try
             {
                 Console.WriteLine("  Adding new weight and date... ");
-                string newContent = "  " + newDate + " , " + convNewWeight;
+                string newContent = newDate + "," + newWeight;
                 File.AppendAllText("WeightBook" + newName + ".txt", newContent + Environment.NewLine);
                                               
                 Console.WriteLine("  Weight and Date have been added. ");
@@ -116,29 +171,19 @@ namespace Weights
 
             Console.Write("  Enter your name: ");
             string name = Console.ReadLine();
-            WeightBook book = new WeightBook(name);
-
+            
             Console.Write("  Enter your start weight (e.g.: 63,5): ");
             float weight = float.Parse(Console.ReadLine());
-            book.AddWeight(weight);
-
-            //convert float to string for save
-
+          
             Console.Write("  Enter your start date (e.g.: 23-09-2018): ");
             string date = Console.ReadLine();
-            book.AddDate(date);
-
+            
             // save to new file
             try
             {
                 Console.WriteLine("  Saving data...");
                 StreamWriter outputStream = File.CreateText("WeightBook" + name + ".txt");
-                outputStream.WriteLine();
-                outputStream.WriteLine("  " + name + "'s Weight Book. ");
-                outputStream.WriteLine();
-                outputStream.WriteLine("  Start weight: {0:f} ", weight);
-                outputStream.WriteLine("  Start date: " + date);
-                outputStream.WriteLine();
+                outputStream.WriteLine(date + "," + weight);
                 outputStream.Close();
                 Console.WriteLine();
                 Console.WriteLine("  You created a new Weight Plan. ");

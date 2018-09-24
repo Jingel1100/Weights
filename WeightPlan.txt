@@ -15,7 +15,8 @@
  Input Name, Weights, Dates					X
  Store Weights and Dates					X
 		Store weight in float				X
- Stats of weights
+ Read Weights and Dates from file
+ Stats of weight
  	- highest weight
   	- lowest weight
 	- start weight
