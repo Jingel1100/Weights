@@ -48,37 +48,30 @@ namespace Weights
                     {
                         WeightBook book = new WeightBook();
                         WeightStatistics stats = book.ComputeStatistics();
-                        string line;
+                        
                         string startDate;
 
-                        using (StreamReader reader = new StreamReader("WeightBook" + bookName + ".txt"))
+                    using (StreamReader readWeights = new StreamReader("WeightBook" + bookName + "_Weights.txt"))
+                    {
+                        string lineWeight;
+                        stats.Startweight = float.Parse(readWeights.ReadLine());
+
+                        while ((lineWeight = readWeights.ReadLine()) != null)
                         {
-                            int i = 0;
-                            while ((line = reader.ReadLine()) != null)
-                            {
-                                i++;
-                            }
-                            
-                            for (int count = 0; count < i; count++)
-                            {
-                                if (count == 1)
-                                {
-                                    string[] bits = line.Split(' ');
-                                    startDate = bits[0];
-                                    stats.Startweight = float.Parse(bits[1]);
-                                }
-
-                                if (count > 1)
-                                {
-                                    string[] bits2 = line.Split(',');
-                                    book.AddDate(bits2[0]);
-                                    book.AddWeight(float.Parse(bits2[1]));
-                                }
-
-                            }
-                            
+                            book.AddWeight(float.Parse(lineWeight));
                         }
-                        
+                    }
+                    using (StreamReader readDates = new StreamReader("WeightBook" + bookName + "_Dates.txt"))
+                    {
+                        string lineDate;
+                        startDate = readDates.ReadLine();
+
+                        while ((lineDate = readDates.ReadLine()) != null)
+                        {
+                            book.AddDate(lineDate);
+                        }
+                    }
+
                         Console.WriteLine();
                         Console.WriteLine("  Startweight: ");
                         Console.WriteLine();
@@ -89,6 +82,7 @@ namespace Weights
                         Console.WriteLine();
 
                         return Back();
+                    
                     }
                     catch (Exception)
                     {
@@ -154,9 +148,8 @@ namespace Weights
             try
             {
                 Console.WriteLine("  Adding new weight and date... ");
-                string newContent = newDate + "," + newWeight;
-                File.AppendAllText("WeightBook" + newName + ".txt", newContent + Environment.NewLine);
-                                              
+                File.AppendAllText("WeightBook" + newName + "_Weights.txt", newWeight + Environment.NewLine);
+                File.AppendAllText("WeightBook" + newName + "_Dates.txt", newDate + Environment.NewLine);                              
                 Console.WriteLine("  Weight and Date have been added. ");
                 return Back();
             }
@@ -187,10 +180,15 @@ namespace Weights
             try
             {
                 Console.WriteLine("  Saving data...");
-                StreamWriter outputStream = File.CreateText("WeightBook" + name + ".txt");
-                outputStream.WriteLine(date + ' ' + weight);
-                outputStream.Close();
+                StreamWriter outputStreamDate = File.CreateText("WeightBook" + name + "_Dates.txt");
+                outputStreamDate.WriteLine(date);
+                outputStreamDate.Close();
                 Console.WriteLine();
+                StreamWriter outputStreamWeight = File.CreateText("WeightBook" + name + "_Weights.txt");
+                outputStreamWeight.WriteLine(weight);
+                outputStreamWeight.Close();
+                Console.WriteLine();
+
                 Console.WriteLine("  You created a new Weight Plan. ");
                 return Back();
             }

@@ -17,17 +17,18 @@ namespace Weights
         public WeightStatistics ComputeStatistics()
         {
             WeightStatistics stats = new WeightStatistics();
-            
-            float start = weights[0];
+            float start = weights.FirstOrDefault();
+            int weightsCount = weights.Count() - 1;
             float last = weights.LastOrDefault(); 
+
             foreach (float weight in weights)
             {
                 stats.HighestWeight = Math.Max(weight, stats.HighestWeight);
                 stats.LowestWeight = Math.Min(weight, stats.LowestWeight);
             }
-
+            
             stats.LostWeight = start - last;
-            stats.AverageWeight = stats.LostWeight / (weights.Count() - 1);
+            stats.AverageWeight = stats.LostWeight / weightsCount;
 
             return stats;
         } 
