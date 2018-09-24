@@ -19,6 +19,7 @@ namespace Weights
         public float HighestWeight;
         public float LowestWeight;
         public float Startweight;
+        public string Startdate;
         public float AverageWeight;
 
     }

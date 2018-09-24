@@ -43,42 +43,22 @@ namespace Weights
                     string bookName = Console.ReadLine();
 
                     //Read info from "WeightBook(bookName).txt" file. 
-                    
                     try
                     {
                         WeightBook book = new WeightBook();
+                        float startWeight = book.ReadWeight(bookName);
+                        string startDate = book.ReadDate(bookName);                        
+
                         WeightStatistics stats = book.ComputeStatistics();
-                        
-                        string startDate;
-
-                    using (StreamReader readWeights = new StreamReader("WeightBook" + bookName + "_Weights.txt"))
-                    {
-                        string lineWeight;
-                        stats.Startweight = float.Parse(readWeights.ReadLine());
-
-                        while ((lineWeight = readWeights.ReadLine()) != null)
-                        {
-                            book.AddWeight(float.Parse(lineWeight));
-                        }
-                    }
-                    using (StreamReader readDates = new StreamReader("WeightBook" + bookName + "_Dates.txt"))
-                    {
-                        string lineDate;
-                        startDate = readDates.ReadLine();
-
-                        while ((lineDate = readDates.ReadLine()) != null)
-                        {
-                            book.AddDate(lineDate);
-                        }
-                    }
 
                         Console.WriteLine();
-                        Console.WriteLine("  Startweight: ");
+                        Console.Write("  Start Weight Plan: {0:f2}", startWeight);
+                        Console.Write(" at " + startDate);
                         Console.WriteLine();
-                        Console.WriteLine("  Highest weight: {0:f}", stats.HighestWeight);
-                        Console.WriteLine("  Lowest weight: {0:f}", stats.LowestWeight);
-                        Console.WriteLine("  Lost weight: {0:f}", stats.LostWeight);
-                        Console.WriteLine("  Average    : {0:f}", stats.AverageWeight);
+                        Console.WriteLine("  Highest weight: {0:f2}", stats.HighestWeight);
+                        Console.WriteLine("  Lowest weight: {0:f2}", stats.LowestWeight);
+                        Console.WriteLine("  Lost weight: {0:f2}", stats.LostWeight);
+                        Console.WriteLine("  Average    : {0:f2}", stats.AverageWeight);
                         Console.WriteLine();
 
                         return Back();
