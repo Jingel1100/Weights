@@ -23,30 +23,15 @@ namespace Weights
         private static bool MainMenu()
         {
             //Start Menu
-            
-            Console.WriteLine("  Welcome to Weight Plan");
-            Console.WriteLine("     MENU:");
-            Console.WriteLine("        1. Create a new Weight Plan. ");
-            Console.WriteLine("        2. Add a new Weight and date. ");
-            Console.WriteLine("        3. Show statistics of a specific Weight Plan. ");
-            Console.WriteLine("        4. Quit. ");
-            Console.WriteLine();
-            Console.Write("  My number of choice: ");
-            string choice = Console.ReadLine();
-            
+            string choice = StartMenu();
+            //Menu choices
             switch (choice)
             {
                 case "1":
                     return CreateNewWeightPlan();
 
                 case "2":
-                    Console.Clear();
-                    Console.WriteLine("  Adding info to Weight Plan: ");
-                    //Add a new weight and date.
-
-                    Console.WriteLine("  Weight and Date have been added. ");
-                    return Back();
-                   
+                    return AddNewWeightAndDate();
 
                 case "3":
                     Console.Clear();
@@ -70,6 +55,55 @@ namespace Weights
                     Console.WriteLine("  !** Please enter a valid number. **! ");
                     Console.WriteLine();
                     return true;
+            }
+        }
+
+        private static string StartMenu()
+        {
+            Console.WriteLine();
+            Console.WriteLine("  Welcome to Weight Plan");
+            Console.WriteLine("     MENU:");
+            Console.WriteLine("        1. Create a new Weight Plan. ");
+            Console.WriteLine("        2. Add a new Weight and date. ");
+            Console.WriteLine("        3. Show statistics of a specific Weight Plan. ");
+            Console.WriteLine("        4. Quit. ");
+            Console.WriteLine();
+            Console.Write("  My number of choice: ");
+            string choice = Console.ReadLine();
+            return choice;
+        }
+
+        private static bool AddNewWeightAndDate()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("  Adding info to Weight Plan: ");
+            Console.WriteLine();
+
+            //Add a new weight and date.
+            Console.Write("  Enter your name: ");
+            string newName = Console.ReadLine();
+
+            Console.Write("  Enter new weight (e.g.: 78,4): ");
+            string convNewWeight = Console.ReadLine();
+            float newWeight = float.Parse(convNewWeight);
+
+            Console.Write("  Enter date of new weight: ");
+            string newDate = Console.ReadLine();
+
+            try
+            {
+                Console.WriteLine("  Adding new weight and date... ");
+                string newContent = "  " + newDate + " , " + convNewWeight;
+                File.AppendAllText("WeightBook" + newName + ".txt", newContent + Environment.NewLine);
+                                              
+                Console.WriteLine("  Weight and Date have been added. ");
+                return Back();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("  Adding weight and date failed. ");
+                return Back();
             }
         }
 
@@ -99,9 +133,12 @@ namespace Weights
             {
                 Console.WriteLine("  Saving data...");
                 StreamWriter outputStream = File.CreateText("WeightBook" + name + ".txt");
+                outputStream.WriteLine();
                 outputStream.WriteLine("  " + name + "'s Weight Book. ");
+                outputStream.WriteLine();
                 outputStream.WriteLine("  Start weight: {0:f} ", weight);
                 outputStream.WriteLine("  Start date: " + date);
+                outputStream.WriteLine();
                 outputStream.Close();
                 Console.WriteLine();
                 Console.WriteLine("  You created a new Weight Plan. ");

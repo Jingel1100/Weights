@@ -8,13 +8,13 @@
 			* name						
 			* start weight					
 			* start date
-	- Add Weight and Date
+	- Add Weight and Date					X
 	- Show stats of a specific WeightBook
 	- Quit application						X
 
  Input Name, Weights, Dates					X
  Store Weights and Dates					X
-		Store weight in float
+		Store weight in float				X
  Stats of weights
  	- highest weight
   	- lowest weight
