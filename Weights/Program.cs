@@ -46,34 +46,39 @@ namespace Weights
                     
                     try
                     {
-                        string line;
-                        int count = 0;
-                        string startDate;
-                        float startWeight;
                         WeightBook book = new WeightBook();
-
-                        StreamReader reader = new StreamReader("WeightBook" + bookName + ".txt");
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            count++;
-
-                            if (count == 1)
-                            {
-                                string[] bits = line.Split(',');
-                                startDate = bits[0];
-                                startWeight = float.Parse(bits[1]);
-                            }
-
-                            if (count > 1)
-                            {
-                                string[] bits2 = line.Split(',');
-                                book.AddDate(bits2[0]);
-                                book.AddWeight(float.Parse(bits2[1]));
-                            }
-                        }
-                        reader.Close();
-
                         WeightStatistics stats = book.ComputeStatistics();
+                        string line;
+                        string startDate;
+
+                        using (StreamReader reader = new StreamReader("WeightBook" + bookName + ".txt"))
+                        {
+                            int i = 0;
+                            while ((line = reader.ReadLine()) != null)
+                            {
+                                i++;
+                            }
+                            
+                            for (int count = 0; count < i; count++)
+                            {
+                                if (count == 1)
+                                {
+                                    string[] bits = line.Split(' ');
+                                    startDate = bits[0];
+                                    stats.Startweight = float.Parse(bits[1]);
+                                }
+
+                                if (count > 1)
+                                {
+                                    string[] bits2 = line.Split(',');
+                                    book.AddDate(bits2[0]);
+                                    book.AddWeight(float.Parse(bits2[1]));
+                                }
+
+                            }
+                            
+                        }
+                        
                         Console.WriteLine();
                         Console.WriteLine("  Startweight: ");
                         Console.WriteLine();
@@ -81,8 +86,8 @@ namespace Weights
                         Console.WriteLine("  Lowest weight: {0:f}", stats.LowestWeight);
                         Console.WriteLine("  Lost weight: {0:f}", stats.LostWeight);
                         Console.WriteLine("  Average    : {0:f}", stats.AverageWeight);
-
                         Console.WriteLine();
+
                         return Back();
                     }
                     catch (Exception)
@@ -183,7 +188,7 @@ namespace Weights
             {
                 Console.WriteLine("  Saving data...");
                 StreamWriter outputStream = File.CreateText("WeightBook" + name + ".txt");
-                outputStream.WriteLine(date + "," + weight);
+                outputStream.WriteLine(date + ' ' + weight);
                 outputStream.Close();
                 Console.WriteLine();
                 Console.WriteLine("  You created a new Weight Plan. ");
