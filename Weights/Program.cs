@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Data;
 
 namespace Weights
 {
@@ -34,47 +35,77 @@ namespace Weights
                     return AddNewWeightAndDate();
 
                 case "3":
-                    Console.Clear();
-                    Console.WriteLine();
-                    Console.WriteLine("  Weight Plan Statistics: ");
-                    Console.WriteLine();
+                    return ShowStatistics();
 
-                    Console.Write("  Enter your name: ");
-                    string bookName = Console.ReadLine();
-
-                    //Read info from "WeightBook(bookName).txt" file. 
-                    try
-                    {
-                        WeightBook book = new WeightBook();
-                        float startWeight = book.ReadWeight(bookName);
-                        string startDate = book.ReadDate(bookName);                        
-
-                        WeightStatistics stats = book.ComputeStatistics();
-
-                        Console.WriteLine();
-                        Console.Write("  Start Weight Plan: {0:f2}", startWeight);
-                        Console.Write(" at " + startDate);
-                        Console.WriteLine();
-                        Console.WriteLine("  Highest weight: {0:f2}", stats.HighestWeight);
-                        Console.WriteLine("  Lowest weight: {0:f2}", stats.LowestWeight);
-                        Console.WriteLine("  Lost weight: {0:f2}", stats.LostWeight);
-                        Console.WriteLine("  Average    : {0:f2}", stats.AverageWeight);
-                        Console.WriteLine();
-
-                        return Back();
-                    
-                    }
-                    catch (Exception)
-                    {
-                        Console.WriteLine("  A WeightBook with this name could not be found. ");
-                        return Back();
-                    }
-                    
                 case "4":
                     return Quit();
 
                 default:
                     return NonValidAction();
+            }
+        }
+
+        private static bool ShowStatistics()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("  Weight Plan Statistics: ");
+            Console.WriteLine();
+
+            Console.Write("  Enter your name: ");
+            string bookName = Console.ReadLine();
+
+            //Read info from "WeightBook(bookName).txt" file. 
+            try
+            {
+                WeightBook book = new WeightBook();
+                float startWeight = book.ReadStartWeight(bookName);
+                string startDate = book.ReadStartDate(bookName);
+                string latestDate = book.dates.LastOrDefault();
+                int count = (book.dates.Count() - 1);
+
+                WeightStatistics stats = book.ComputeStatistics();
+
+                /*Console.WriteLine("  Stored Data: ");     //Tabel 
+
+                DataTable storedData = new DataTable();
+                storedData.Columns.Add(" Dates ");
+                storedData.Columns.Add(" Weights ");
+                string passDate = " ";
+                foreach (string date in book.dates)
+                {
+                    
+                    for (int i = 0; i < (book.dates.Count() - 1); i++)
+                    {
+                        passDate = book.dates[i];
+                    }
+                    storedData.Rows.Add(passDate);
+                }
+
+                Console.WriteLine("  " + storedData);*/
+                Console.WriteLine();
+                Console.Write("  Start Weight   :   {0:f2}", startWeight);
+                Console.WriteLine(" at " + startDate);
+                Console.Write("  Latest weight  :   {0:f2}", stats.LatestWeight);
+                Console.WriteLine(" at " + latestDate);
+                Console.WriteLine();
+                Console.WriteLine("  Highest weight :   {0:f2}", stats.HighestWeight);
+                Console.WriteLine("  Lowest weight  :   {0:f2}", stats.LowestWeight);
+                Console.Write("  Lost weight    :   {0:f2}", stats.LostWeight);
+                Console.WriteLine(" lost over {0} weeks ", count);
+                Console.Write("  Average        :   {0:f2}", stats.AverageWeight);
+                Console.WriteLine(" a week ");
+                Console.WriteLine();
+                
+                Console.WriteLine();
+
+                return Back();
+
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("  A WeightBook with this name could not be found. ");
+                return Back();
             }
         }
 

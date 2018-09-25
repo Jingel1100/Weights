@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,8 @@ namespace Weights
             weights = new List<float>();
             dates = new List<string>();
         }
-
-        public float ReadWeight(string bookName)
+        
+        public float ReadStartWeight(string bookName)
         {
             var fileStreamWeights = new FileStream("WeightBook" + bookName + "_Weights.txt", FileMode.Open, FileAccess.Read);
             
@@ -35,7 +36,7 @@ namespace Weights
             return startWeight;
         }
 
-        public string ReadDate(string bookName)
+        public string ReadStartDate(string bookName)
         {
             var fileStreamDates = new FileStream("WeightBook" + bookName + "_Dates.txt", FileMode.Open, FileAccess.Read);
             using (StreamReader readDates = new StreamReader(fileStreamDates, Encoding.UTF8))
@@ -69,6 +70,7 @@ namespace Weights
             stats.AverageWeight = stats.LostWeight / weightsCount;
             stats.Startweight = start;
             stats.Startdate = dates.FirstOrDefault();
+            stats.LatestWeight = last;
 
             return stats;
         } 
@@ -84,7 +86,7 @@ namespace Weights
         }
 
         //List<string> names;
-        List<float> weights;
-        List<string> dates;
+        internal List<float> weights;
+        internal List<string> dates;
     }
 }

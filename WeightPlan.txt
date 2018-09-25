@@ -9,19 +9,25 @@
 			* start weight					
 			* start date
 	- Add Weight and Date					X
-	- Show stats of a specific WeightBook
+	- Show stats of a specific WeightBook	X
 	- Quit application						X
 
  Input Name, Weights, Dates					X
  Store Weights and Dates					X
 		Store weight in float				X
- Read Weights and Dates from file
- Stats of weight
+ Read Weights and Dates from file			X
+ Stats of weight							X
  	- highest weight
   	- lowest weight
 	- start weight
 	- lost weight
+	- latest weight 
 
  Menu Loop									X
+ Add Loop
+ Latest date
+ amount of items (weeks) recorded
+
+
  
  
