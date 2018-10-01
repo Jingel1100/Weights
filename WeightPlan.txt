@@ -35,7 +35,8 @@
 	WeightBook
 		constructor(username, date, weight)
 		CreateNewWeightBook
-		AddNewWeightAndDate
+		AddNewWeightAndDate(username)
+			string: newWeight, newDate;
 		SaveWeight(username)
 		SaveDate(username)
 		ReadWeight(username)
