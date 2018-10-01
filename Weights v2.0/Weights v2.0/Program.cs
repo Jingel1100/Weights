@@ -10,6 +10,15 @@ namespace Weights_v2._0
     {
         static void Main(string[] args)
         {
+            //UserLogin
+            string username = "";
+            User user = new User();
+            username = user.GetUserName();
+                     
+            //MainMenu
+            MainMenu menu = new MainMenu(username);
+            menu.Menu(username);
+            
         }
     }
 }

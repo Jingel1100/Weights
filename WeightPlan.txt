@@ -32,6 +32,10 @@
             Class Diagram
 #***********************************#
 
+	Program
+		MainMenu.UserMenu()
+		MainMenu.StartMenu()
+	
 	WeightBook
 		constructor(username, date, weight)
 		CreateNewWeightBook
