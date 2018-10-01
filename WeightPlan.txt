@@ -3,30 +3,74 @@
              Weight Plan
 #***********************************#
 
- Menu										X
-	- new WeightBook						X
+ Menu						X
+	- new WeightBook			X
 			* name						
 			* start weight					
 			* start date
-	- Add Weight and Date					X
+	- Add Weight and Date			X
 	- Show stats of a specific WeightBook	X
-	- Quit application						X
+	- Quit application			X
 
- Input Name, Weights, Dates					X
- Store Weights and Dates					X
-		Store weight in float				X
- Read Weights and Dates from file			X
- Stats of weight							X
+ Input Name, Weights, Dates			X
+ Store Weights and Dates			X
+		Store weight in float		X
+ Read Weights and Dates from file		X
+ Stats of weight				X
  	- highest weight
   	- lowest weight
 	- start weight
 	- lost weight
 	- latest weight 
 
- Menu Loop									X
+ Menu Loop					X
  Add Loop
  Latest date
  amount of items (weeks) recorded
+
+#***********************************#
+            Class Diagram
+#***********************************#
+
+	WeightBook
+		constructor(username, date, weight)
+		CreateNewWeightBook
+		AddNewWeightAndDate
+		SaveWeight(username)
+		SaveDate(username)
+		ReadWeight(username)
+		ReadDate(username)
+				
+	WeightStatistics
+		compute statistics
+		show statistics
+			showStoredData
+			startWeight & startDate
+			latestWeight & latestDate
+			HighestWeight
+			LowestWeight
+			LostWeight
+			AverageWeight
+
+	User
+		inputUserName 
+		changeUserName
+		
+	MainMenu
+		UserMenu		
+		StartMenu
+		BackToUserMenu
+		BackToStartMenu
+		ExitProgram
+	
+	Errors
+		UserExists
+		BookExists
+		DateExists
+		NonValidAction
+	
+
+	
 
 
  
