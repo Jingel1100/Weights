@@ -18,6 +18,7 @@ namespace Weights_v2._0
         internal string GetUserName()
         {
             string username;
+            Console.Clear();
             Console.WriteLine();
             Console.WriteLine("  Welcome to Weight Book ");
             Console.WriteLine();

@@ -4,21 +4,31 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Weights_v2._0
 {
     class MainMenu
     {
         internal string username;
+        WeightBook book = new WeightBook();
         WeightStatistics stats = new WeightStatistics();
         Errors error = new Errors();
 
-        public MainMenu(string name)            // constructor
+        public MainMenu()            // constructor
         {
-            username = name;
+            username = UserMenu();
         }
 
-        internal bool Menu(string username)
+        internal string UserMenu()
+        {
+            //UserLogin
+            User user = new User();
+            username = user.GetUserName();
+            return username;
+        }
+
+        internal bool Menu()
         {
             //Start Menu
             string choice = StartMenu();
@@ -32,10 +42,14 @@ namespace Weights_v2._0
                     return WeightBook.AddNewWeightAndDate(username);
 
                 case "3":
-                    return WeightStatistics.ShowStatistics(username);
+                    return WeightStatistics.ShowStatistics(username, stats, book);
 
                 case "4":
                     return ExitProgram();
+
+                case "5":
+                    username = UserMenu();
+                    return true;
 
                 default:
                     return Errors.NonValidAction();
@@ -48,16 +62,16 @@ namespace Weights_v2._0
             return false;
         }
 
-       
         private string StartMenu()
         {
             Console.WriteLine();
-            Console.WriteLine("  {0} Weight Book", username);
+            Console.WriteLine("  {0}'s Weight Book", username);
             Console.WriteLine("     MENU:");
             Console.WriteLine("        1. Create a new Weight Plan. ");
             Console.WriteLine("        2. Add a new Weight and date. ");
             Console.WriteLine("        3. Show statistics of a specific Weight Plan. ");
             Console.WriteLine("        4. Quit. ");
+            Console.WriteLine("        5. Change user. ");
             Console.WriteLine();
             Console.Write("  My number of choice: ");
             string choice = Console.ReadLine();
@@ -88,7 +102,5 @@ namespace Weights_v2._0
                 return false;
             }
         }
-
-
     }
 }
