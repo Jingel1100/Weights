@@ -40,13 +40,13 @@ namespace Weights_v2._0
         {
             string[] writeDates = dates.ToArray();
             return writeDates;
-        }
+        }        // convert Dates from list to array
 
         public float[] WriteWeights()
         {
             float[] writeWeights = weights.ToArray();
             return writeWeights;
-        }
+        }       // convert Weights from list to array
 
         public float ReadStartWeight(string bookName)
         {

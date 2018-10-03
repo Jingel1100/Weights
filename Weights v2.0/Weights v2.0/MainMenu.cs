@@ -96,10 +96,22 @@ namespace Weights_v2._0
                 return true;
             }
 
-            else
+            else if (choice == "q")
             {
                 Environment.Exit(0);
                 return false;
+            }
+
+            else if (choice == "Q")
+            {
+                Environment.Exit(0);
+                return false;
+            }
+
+            else
+            {
+                Console.WriteLine(Errors.NonValidAction());
+                return BackToMenu();
             }
         }
     }

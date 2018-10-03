@@ -10,7 +10,11 @@ namespace Weights_v2._0
     {
         internal static bool NonValidAction()
         {
-            throw new NotImplementedException();
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("  !** Please enter a valid character. **! ");
+            Console.WriteLine();
+            return true;
         }
     }
 }

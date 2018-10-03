@@ -16,12 +16,6 @@ namespace Weights_v2._0
 
             while (repeat == true)
             {
-                // int value = index++
-                // if value == 1 loop
-                // menu.UserMenu();
-                // repeat = menu.Menu();
-
-                //if value is bigger than 1
                 repeat = menu.Menu();
             }
             

@@ -8,7 +8,7 @@ namespace Weights_v2._0
 {
     class WeightStatistics
     {
-        public WeightStatistics()
+        public WeightStatistics()       // constructor
         {
             HighestWeight = float.MinValue;
             LowestWeight = float.MaxValue;
@@ -24,37 +24,57 @@ namespace Weights_v2._0
                                             // Read info from "WeightBook(username).txt" file. 
             try                             
             {
+                // Declerations and Initialisation
                 float startWeight = book.ReadStartWeight(username);
                 string startDate = book.ReadStartDate(username);
                 string latestDate = book.dates.LastOrDefault();
                 int count = (book.dates.Count() - 1);
                 float[] weights = book.WriteWeights();
                 string[] dates = book.WriteDates();
+                stats = book.ComputeStatistics(stats);
+                float lostWeight = stats.LostWeight;
+                float average = stats.AverageWeight;
+
+                if (average <= 0 )
+                {
+                    average = 0.0f;
+                }
 
                 // Write stored info to console in two columns.
+
                 Console.WriteLine("  Stored dates and weights: "); 
                 Console.WriteLine();
-                Console.WriteLine("  Dates " + "/t" + " Weights ");
-                for (int i = 0; i < count; i++)
+                Console.WriteLine("  Dates " + "      " + " Weights ");
+                for (int i = 0; i < (dates.Length); i++)
                 {
-                    Console.WriteLine("  " + dates[i] + "/t {0:f2}", weights[i]);  
+                    Console.Write("  " + dates[i]);
+                    Console.WriteLine("      " + weights[i]);
                 }
                 Console.WriteLine();
 
-                // Compute and Write statistics to console.
-                stats = book.ComputeStatistics(stats);     
+                // Write statistics to console.
+                    
                 Console.WriteLine();
-                Console.Write("  Start Weight   :   {0:f2}", startWeight);
+                Console.Write("  Start Weight   :   {0:f}", startWeight);
                 Console.WriteLine(" at " + startDate);
-                Console.Write("  Latest weight  :   {0:f2}", stats.LatestWeight);
+                Console.Write("  Latest weight  :   {0:f}", stats.LatestWeight);
                 Console.WriteLine(" at " + latestDate);
                 Console.WriteLine();
-                Console.WriteLine("  Highest weight :   {0:f2}", stats.HighestWeight);
-                Console.WriteLine("  Lowest weight  :   {0:f2}", stats.LowestWeight);
-                Console.Write("  Lost weight    :   {0:f2}", stats.LostWeight);
-                Console.WriteLine(" lost over {0} weeks ", count);
-                Console.Write("  Average        :   {0:f2}", stats.AverageWeight);
-                Console.WriteLine(" a week ");
+                Console.WriteLine("  Highest weight :   {0:f}", stats.HighestWeight);
+                Console.WriteLine("  Lowest weight  :   {0:f}", stats.LowestWeight);
+                
+                // Is there weightloss or gain?
+                if (lostWeight < 0)
+                {
+                    lostWeight *= -1;
+                    Console.WriteLine("  Gained weight  :   {0:f}", lostWeight);
+                }
+                else
+                {
+                    Console.WriteLine("  Lost weight    :   {0:f}", lostWeight);
+                }
+                
+                Console.Write("  Average        :   {0:f}", average);
                 Console.WriteLine();
 
                 Console.WriteLine();

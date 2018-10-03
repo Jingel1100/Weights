@@ -8,16 +8,10 @@ namespace Weights_v2._0
 {
     class User
     {
-        string username = " ";
-
-        public User()
-        {
-            username = " no name passed ";
-        }
-
+        
         internal string GetUserName()
         {
-            string username;
+            string username = " ";
             Console.Clear();
             Console.WriteLine();
             Console.WriteLine("  Welcome to Weight Book ");
