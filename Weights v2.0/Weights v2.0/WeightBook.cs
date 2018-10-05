@@ -36,6 +36,12 @@ namespace Weights_v2._0
             return stats;
         }
 
+        internal void Reset()
+        {
+            weights = null;
+            dates = null;
+        }
+
         public string[] WriteDates()
         {
             string[] writeDates = dates.ToArray();

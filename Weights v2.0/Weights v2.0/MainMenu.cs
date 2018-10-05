@@ -10,6 +10,7 @@ namespace Weights_v2._0
 {
     class MainMenu
     {
+        
         internal string username;
         WeightBook book = new WeightBook();
         WeightStatistics stats = new WeightStatistics();
@@ -88,6 +89,7 @@ namespace Weights_v2._0
 
             if (choice == "m")
             {
+                
                 return true;
             }
 
