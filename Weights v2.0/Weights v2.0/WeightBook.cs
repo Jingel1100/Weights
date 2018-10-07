@@ -57,7 +57,7 @@ namespace Weights_v2._0
         public float ReadStartWeight(string bookName)
         {
             var fileStreamWeights = new FileStream("WeightBook" + bookName + "_Weights.txt", FileMode.Open, FileAccess.Read);
-
+            
             using (StreamReader readWeights = new StreamReader(fileStreamWeights, Encoding.UTF8))
             {
                 string lineWeight;

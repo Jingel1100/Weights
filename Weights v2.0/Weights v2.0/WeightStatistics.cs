@@ -36,6 +36,11 @@ namespace Weights_v2._0
                     float lostWeight = stats.LostWeight;
                     float average = stats.AverageWeight;
 
+                    if (count <= 1)
+                    {
+                        average = 0;
+                    }
+
                     if (average < 0)
                     {
                         average *= -1;
@@ -79,8 +84,6 @@ namespace Weights_v2._0
                     Console.WriteLine();
 
                     Console.WriteLine();
-
-                    book.Reset();
 
                     return MainMenu.BackToMenu();
 

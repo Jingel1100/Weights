@@ -24,6 +24,8 @@ namespace Weights_v2._0
         internal string UserMenu()
         {
             //UserLogin
+            book.weights.Clear();
+            book.dates.Clear();
             User user = new User();
             username = user.GetUserName();
             return username;
